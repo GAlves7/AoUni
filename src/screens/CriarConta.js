@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
@@ -7,7 +7,6 @@ import { Ionicons } from '@expo/vector-icons'
 export default function CriarConta() {
   
   const navigation = useNavigation()
-
   const [email, setEmailCad] = useState()
   const [usuario, setUsuarioCad] = useState()
   const [senha, setSenhaCad] = useState()
@@ -95,11 +94,15 @@ const styles = StyleSheet.create({
   },
   titulo:{
     position: "absolute",
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontSize: 30,
     fontWeight: "bold",
     color: "#fff",
     top: 75,
     left: 35,
+    textShadowColor: "#000",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 3,
   },
   input:{
     backgroundColor: "#ffffff",
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   textoRegistrar:{
-    fontFamily: "Cochin",
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontSize: 20,
     fontWeight:'bold',
     color:"#ffffff",

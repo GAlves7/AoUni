@@ -23,54 +23,54 @@ export default function Login(){
 
   return(
     
-      <LinearGradient
-        colors={['#0a002e', '#0f0142']}
+    <LinearGradient
+      colors={['#0a002e', '#0f0142']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={styles.container}
+    >
+    
+    <Image
+      source={require("../assets/logo.png")}
+      style={styles.logo}
+    />
+
+    <Text style={styles.titulo}>Bem-Vindo (a) ao AOUNI!</Text>
+
+    <TextInput
+      style={styles.input}
+      onChangeText={value =>setUsuarioLog(value)}
+      placeholder='Usuário'
+    />
+    
+    <TextInput
+      style={styles.input}
+      onChangeText={value =>setSenhaLog(value)}
+      placeholder='Senha'
+    />
+
+    <View style={styles.recuperarSenhaContainer}>
+      <TouchableOpacity onPress={esqueciSenha}>
+        <Text style={styles.recuperarSenha}>Recuperar senha</Text>
+      </TouchableOpacity>
+    </View>
+
+    <TouchableOpacity style={styles.botaoLogin} onPress={validarLogin}>
+      <LinearGradient 
+        colors={['#160161', '#2602a8']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={styles.container}
+        style={styles.gradientBotaoLogin}
       >
-      
-      <Image
-        source={require("../assets/logo.png")}
-        style={styles.logo}
-      />
+        <Text style={styles.textoLogin}>ENTRAR</Text>
+      </LinearGradient>
+    </TouchableOpacity>
+    
+    <TouchableOpacity style={styles.botaoCadastro} onPress={pageCadastro}>
+        <Text style={styles.textoCadastro}>CRIAR CONTA</Text>
+    </TouchableOpacity>
 
-      <Text style={styles.titulo}>Bem-Vindo (a) ao AOUNI!</Text>
-
-      <TextInput
-        style={styles.input}
-        onChangeText={value =>setUsuarioLog(value)}
-        placeholder='Usuário'
-      />
-      
-      <TextInput
-        style={styles.input}
-        onChangeText={value =>setSenhaLog(value)}
-        placeholder='Senha'
-      />
-
-      <View style={styles.recuperarSenhaContainer}>
-        <TouchableOpacity onPress={esqueciSenha}>
-          <Text style={styles.recuperarSenha}>Recuperar senha</Text>
-        </TouchableOpacity>
-      </View>
-
-      <TouchableOpacity style={styles.botaoLogin} onPress={validarLogin}>
-        <LinearGradient 
-          colors={['#160161', '#2602a8']}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.gradientBotaoLogin}
-        >
-          <Text style={styles.textoLogin}>ENTRAR</Text>
-        </LinearGradient>
-      </TouchableOpacity>
-      
-      <TouchableOpacity style={styles.botaoCadastro} onPress={pageCadastro}>
-          <Text style={styles.textoCadastro}>CRIAR CONTA</Text>
-      </TouchableOpacity>
-
-    </LinearGradient>
+  </LinearGradient>
   )
 }
 
