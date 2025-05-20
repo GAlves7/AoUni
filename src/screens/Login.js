@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import {useNavigation} from '@react-navigation/native'
+import { useNavigation } from '@react-navigation/native'
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 export default function Login(){
   
   const navigation = useNavigation()
-  const [usuario, setUsuario] = useState()
-  const [senha, setSenha] = useState()
+  const [usuario, setUsuarioLog] = useState()
+  const [senha, setSenhaLog] = useState()
 
   function validarLogin (){
 
@@ -17,7 +17,7 @@ export default function Login(){
     alert("Acesse o link para recuperar a senha.")
   }
 
-  function PageCadastro(){
+  function pageCadastro(){
     navigation.navigate("CriarConta")
   }
 
@@ -39,13 +39,13 @@ export default function Login(){
 
       <TextInput
         style={styles.input}
-        onChangeText={value =>setUsuario(value)}
+        onChangeText={value =>setUsuarioLog(value)}
         placeholder='Usuário'
       />
       
       <TextInput
         style={styles.input}
-        onChangeText={value =>setSenha(value)}
+        onChangeText={value =>setSenhaLog(value)}
         placeholder='Senha'
       />
 
@@ -66,7 +66,7 @@ export default function Login(){
         </LinearGradient>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.botaoCadastro} onPress={PageCadastro}>
+      <TouchableOpacity style={styles.botaoCadastro} onPress={pageCadastro}>
           <Text style={styles.textoCadastro}>CRIAR CONTA</Text>
       </TouchableOpacity>
 
