@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
 export default function Login(){
@@ -14,7 +14,7 @@ export default function Login(){
   }
 
   const esqueciSenha = () => {
-    alert("Acesse o link para recuperar a senha.")
+    navigation.navigate("EsqueceuSenha01")
   }
 
   function pageCadastro(){
@@ -35,7 +35,7 @@ export default function Login(){
         style={styles.logo}
       />
 
-      <Text style={styles.titulo}>Bem-Vindo ao AoUni, apoio ao PRÉ/UNIVERSITÁRIO</Text>
+      <Text style={styles.titulo}>Bem-Vindo (a) ao AOUNI!</Text>
 
       <TextInput
         style={styles.input}
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   },
   titulo:{
     color: "#ffffff",
-    fontFamily: "Cochin",
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontSize: 13,
     margin: 35,
   },
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   textoLogin:{
-    fontFamily: "Cochin",
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontSize: 20,
     fontWeight:'bold',
     color:"#ffffff",
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textoCadastro:{
-    fontFamily: "Cochin",
+    fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontSize: 15,
     fontWeight:'bold',
     color:"#100E2A",

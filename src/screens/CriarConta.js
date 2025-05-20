@@ -1,17 +1,20 @@
-import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useState } from 'react'
+import { Ionicons } from '@expo/vector-icons'
 
 export default function CriarConta() {
   
+  const navigation = useNavigation()
+
   const [email, setEmailCad] = useState()
-  const [usuario, setUsuarioCada] = useState()
+  const [usuario, setUsuarioCad] = useState()
   const [senha, setSenhaCad] = useState()
 
   function confirmarCadastro(){
-
+    navigation.navigate('Login')
+    alert('✅ Cadastro realizado! Agora, entre em sua conta.')
   }
 
   return (
@@ -22,6 +25,13 @@ export default function CriarConta() {
             end={{ x: 1, y: 0 }}
             style={styles.container}
     >
+
+      <TouchableOpacity
+        style={styles.botaoVoltar}
+        onPress={() => navigation.goBack()}
+      >
+        <Ionicons name="arrow-back" size={30} color="#fff" />
+      </TouchableOpacity>
 
       <View>
         <Image
@@ -49,14 +59,14 @@ export default function CriarConta() {
         placeholder='Senha'
       />
 
-      <TouchableOpacity style={styles.botaoLogin} onPress={confirmarCadastro}>
+      <TouchableOpacity style={styles.botaoRegistrar} onPress={confirmarCadastro}>
         <LinearGradient 
           colors={['#160161', '#2602a8']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
-          style={styles.gradientBotaoLogin}
+          style={styles.gradientBotaoRegistrar}
         >
-          <Text style={styles.textoLogin}>REGISTRAR</Text>
+          <Text style={styles.textoRegistrar}>REGISTRAR</Text>
         </LinearGradient>
       </TouchableOpacity>
 
@@ -70,6 +80,12 @@ const styles = StyleSheet.create({
     flex:1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  botaoVoltar: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    zIndex: 20,
   },
   logo:{
     opacity: 0.35,
@@ -93,13 +109,13 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     padding: 10,
   },
-  textoLogin:{
+  textoRegistrar:{
     fontFamily: "Cochin",
     fontSize: 20,
     fontWeight:'bold',
     color:"#ffffff",
   },
-  botaoLogin:{
+  botaoRegistrar:{
     width: "55%",
     height: 45,
     marginTop: 53,
@@ -107,7 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow:"hidden",
   },
-  gradientBotaoLogin:{
+  gradientBotaoRegistrar:{
     width: '100%',
     height: '100%',
     borderRadius: 10,
