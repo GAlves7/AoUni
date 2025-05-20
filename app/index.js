@@ -38,13 +38,13 @@ export default function App(){
       <TextInput
         style={styles.input}
         onChangeText={value =>setUsuario(value)}
-        placeholder='Digite seu usuário'
+        placeholder='Usuário'
       />
       
       <TextInput
         style={styles.input}
         onChangeText={value =>setSenha(value)}
-        placeholder='Digite sua senha'
+        placeholder='Senha'
       />
 
       <View style={styles.recuperarSenhaContainer}>
@@ -65,8 +65,9 @@ export default function App(){
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.botaoCadastro} onPress={validarCadastro}>
-          <Text style={styles.textoCadastro}>Não tem uma conta? CLIQUE AQUI</Text>
+          <Text style={styles.textoCadastro}>CRIAR CONTA</Text>
       </TouchableOpacity>
+
     </LinearGradient>
   )
 }
@@ -78,22 +79,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo:{
-    marginTop: -30,
+    marginTop: -35,
   },
   titulo:{
     color: "#ffffff",
     fontFamily: "Cochin",
     fontSize: 13,
-    marginBottom: 70,
+    margin: 35,
   },
   input:{
+    backgroundColor: "#ffffff",
     height: 45,
     width: "80%",
     marginTop: 12,
     borderRadius: 1,
     padding: 10,
-    borderRadius: 10,
-    backgroundColor: "#ffffff"
   },
   textoLogin:{
     fontFamily: "Cochin",
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     color:"#ffffff",
   },
   botaoLogin:{
-    width: "80%",
+    width: "55%",
     height: 45,
     marginTop: 100,
     borderRadius: 10,
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   textoCadastro:{
     fontFamily: "Cochin",
-    fontSize: 12,
+    fontSize: 15,
     fontWeight:'bold',
     color:"#100E2A",
   },
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#ffffff",
     padding: 10,
-    width: "80%",
+    width: "55%",
     height: 45,
     marginTop: 12,
     borderRadius: 10,
@@ -139,5 +139,5 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontSize: 12,
     textDecorationLine: 'underline',
-  }
+  },
 })
