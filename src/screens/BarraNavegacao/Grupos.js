@@ -1,4 +1,4 @@
-import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
@@ -13,6 +13,7 @@ export default function Search(){
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={25} color="#fff" />
                 </TouchableOpacity>
+                <Text style={styles.titulo}>GRUPOS</Text>
             </View>
 
             <View style={styles.caixaPesq}>
@@ -37,9 +38,17 @@ const styles = StyleSheet.create({
         backgroundColor: "#141414",
     },
     header: {
+        flexDirection: 'row',
+        alignItems: 'center',
         paddingHorizontal: 15,
         paddingTop: 10,
         paddingBottom: 10,
+    },
+    titulo:{
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 275,
     },
     caixaPesq: {
         flexDirection: 'row',

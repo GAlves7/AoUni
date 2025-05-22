@@ -20,6 +20,8 @@ export default function Feed(){
         </TouchableOpacity>
 
         <Text style={styles.titulo}>Nova publicação</Text>
+
+        <Text style={styles.titulo2}>FEED</Text>
       </View>
 
       <View style={styles.content}>
@@ -57,5 +59,11 @@ const styles = StyleSheet.create({
   semPost: {
     color: '#aaa',
     fontSize: 16,
+  },
+  titulo2: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 200,
   },
 })

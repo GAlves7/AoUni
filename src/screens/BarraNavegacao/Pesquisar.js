@@ -24,12 +24,13 @@ export default function Pesquisar(){
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={25} color="#fff" />
                 </TouchableOpacity>
+                <Text style={styles.titulo}>PESQUISAR</Text>
             </View>
 
             <View style={styles.caixaPesq}>
                 <Ionicons name="search" size={20} color="#ccc" style={styles.iconePesq} />
                 <TextInput
-                    placeholder="Pesquisar (Ex.: Medicina)"
+                    placeholder="Ex.: Medicina"
                     placeholderTextColor="#ccc"
                     style={styles.input}
                     onChangeText={value => setPesquisa(value)}
@@ -66,6 +67,8 @@ const styles = StyleSheet.create({
         backgroundColor: "#141414",
     },
     header: {
+        flexDirection: 'row',
+        alignItems: 'center',
         paddingHorizontal: 15,
         paddingTop: 10,
         paddingBottom: 10,
@@ -117,5 +120,11 @@ const styles = StyleSheet.create({
         marginTop: 8,
         fontSize: 14,
         fontWeight: 'bold',
+    },
+    titulo: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 250,
     },
 })

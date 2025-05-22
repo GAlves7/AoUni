@@ -11,7 +11,7 @@ export default function EsqueceuSenha02(){
     const [confSenha, setConfSenhaEsq] = useState()
     
     function validarAlterar(){
-        navigation.navigate("Login")
+        navigation.replace("Login")
         alert('✅ Troca de senha realizada! Agora, entre em sua conta.')
     }
 

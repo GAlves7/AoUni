@@ -12,7 +12,7 @@ export default function CriarConta() {
   const [senha, setSenhaCad] = useState()
 
   function confirmarCadastro(){
-    navigation.navigate('Login')
+    navigation.replace('Login')
     alert('✅ Cadastro realizado! Agora, entre em sua conta.')
   }
 
