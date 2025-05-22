@@ -3,14 +3,14 @@ import { useNavigation } from '@react-navigation/native'
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 
-export default function Login(){
+export default function Login({}){
   
   const navigation = useNavigation()
   const [usuario, setUsuarioLog] = useState()
   const [senha, setSenhaLog] = useState()
 
   function validarLogin (){
-
+    navigation.replace("Rotas")
   }
 
   const esqueciSenha = () => {
@@ -31,7 +31,7 @@ export default function Login(){
     >
     
     <Image
-      source={require("../assets/logo.png")}
+      source={require("../../assets/logo.png")}
       style={styles.logo}
     />
 

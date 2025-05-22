@@ -34,7 +34,7 @@ export default function CriarConta() {
 
       <View>
         <Image
-          source={require("../assets/logo.png")}
+          source={require("../../assets/logo.png")}
           style={styles.logo}
         />
         <Text style={styles.titulo}>REGISTRE-SE</Text>

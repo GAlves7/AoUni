@@ -30,7 +30,7 @@ export default function EsqueceuSenha01(){
 
             <View>
                 <Image
-                    source={require("../assets/logo.png")}
+                    source={require("../../assets/logo.png")}
                     style={styles.logo}
                 />
                 <Text style={styles.titulo1}>REDEFINIR</Text>
