@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, View, TextInput, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, View, TextInput, TouchableOpacity, Text, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
@@ -7,11 +7,19 @@ import { useNavigation } from '@react-navigation/native'
 export default function Search(){
 
     const navigation = useNavigation()
-    const [pesquisa, setPesquisa] = useState()
-        
-    function InfosGrupo() {
-        navigation.navigate('')
-    }
+    const [pesquisa, setPesquisa] = useState("")
+    
+    const faculdades = [{
+        id: '1',
+        nome: 'UNINASSAU Caruaru – Medicina',
+        imagem: require('../../../../assets/nassau.png'),
+        rota: 'InfoGrupoMed'
+    }]   
+
+    const faculdadesFiltradas = faculdades.filter(item =>
+        item.nome.toLowerCase().includes(pesquisa.toLowerCase())
+    )
+
 
     return(
         <SafeAreaView style={styles.container}>
@@ -31,7 +39,7 @@ export default function Search(){
             <View style={styles.caixaPesq}>
                 <Ionicons name="search" size={20} color="#ccc" style={styles.iconePesq} />
                 <TextInput
-                    placeholder="Pesquisar (Ex.: Medicina)"
+                    placeholder="Ex.: UNINASSAU"
                     placeholderTextColor="#ccc"
                     style={styles.input}
                     onChangeText={value => setPesquisa(value)}
@@ -40,6 +48,16 @@ export default function Search(){
 
             <View style={styles.linha} />
 
+            {faculdadesFiltradas.map(item => (
+                <TouchableOpacity
+                    key={item.id}
+                    style={styles.faculdadeBox}
+                    onPress={() => navigation.navigate(item.rota)}
+                >
+                    <Image source={item.imagem} style={styles.faculdadeLogo} />
+                    <Text style={styles.faculdadeNome}>{item.nome}</Text>
+                </TouchableOpacity>
+            ))}
         </SafeAreaView>
     )
 }
@@ -93,6 +111,30 @@ const styles = StyleSheet.create({
     linha: {
         height: 1,
         backgroundColor: '#333',
-        top: 55,
+        marginTop: 55,
+        marginBottom: 15,
+    },
+    faculdadeBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#1e1e1e',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#444',
+        padding: 15,
+        marginHorizontal: 20,
+        marginTop: 25,      
+        gap: 15,            
+    },
+    faculdadeLogo: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+    },
+    faculdadeNome: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
+        flexShrink: 1,     
     },
 })

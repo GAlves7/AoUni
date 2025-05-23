@@ -27,19 +27,18 @@ export default function Search(){
             <View style={styles.linha} />
 
             <View style={styles.opcoesContainer}>
-                <TouchableOpacity style={styles.opcao}>
-                    <Ionicons name="settings-outline" size={24} color="#fff" />
-                    <Text style={styles.textoOpcao}>Configurações</Text>
-                </TouchableOpacity>
 
-                <TouchableOpacity style={styles.opcao}>
+                <TouchableOpacity 
+                    style={styles.opcao}
+                    onPress={() => navigation.navigate('Salvos')}
+                >
                     <Ionicons name="bookmark-outline" size={24} color="#fff" />
                     <Text style={styles.textoOpcao}>Salvos</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.opcao}
-                    onPress={() => navigation.replace("Login")}
+                    onPress={() => navigation.replace('Login')}
                 >
                     <Ionicons name="log-out-outline" size={24} color="#fff" />
                     <Text style={styles.textoOpcao}>Sair</Text>
