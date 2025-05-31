@@ -9,7 +9,7 @@ export default function Feed(){
     const navigation = useNavigation()
     
     function criarNovaPublicacao() {
-        navigation.navigate('')
+        navigation.navigate('CriarNovaPubli')
     }
 
     return (
@@ -22,10 +22,6 @@ export default function Feed(){
         <Text style={styles.titulo}>Nova publicação</Text>
 
         <Text style={styles.titulo2}>FEED</Text>
-      </View>
-
-      <View style={styles.content}>
-        <Text style={styles.semPost}>Nenhuma publicação ainda</Text>
       </View>
     </SafeAreaView>
   )
