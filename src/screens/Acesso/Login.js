@@ -2,15 +2,48 @@ import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
+import api from '../../../src/axios/api'
 
 export default function Login({}){
   
   const navigation = useNavigation()
-  const [usuario, setUsuarioLog] = useState()
+  const [email, setEmailLog] = useState()
   const [senha, setSenhaLog] = useState()
 
   function validarLogin (){
-    navigation.replace("Rotas")
+    
+    const validarLogin = async () => {
+
+      if (!email || !senha) {
+        alert("Preencha todos os campos!");
+        return
+      }
+
+      try {
+
+        const response = await api.post('/usuario/login', {
+          
+          email: email,
+          senha: senha
+          
+        })
+      
+          console.log("Login Válido.")
+          navigation.replace("Rotas")
+
+
+      }catch(error) {
+        if (error.response && error.response.status === 400) {
+          alert("Email ou senha incorretos!")
+        } else {
+          alert("Erro no servidor!")
+        }
+      }
+
+    }
+
+      validarLogin()
+
   }
 
   const esqueciSenha = () => {
@@ -39,8 +72,8 @@ export default function Login({}){
 
     <TextInput
       style={styles.input}
-      onChangeText={value =>setUsuarioLog(value)}
-      placeholder='Usuário'
+      onChangeText={value =>setEmailLog(value)}
+      placeholder='Email'
     />
     
     <TextInput

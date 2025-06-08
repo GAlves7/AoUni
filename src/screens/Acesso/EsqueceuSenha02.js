@@ -1,18 +1,54 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
+import api from '../../../src/axios/api'
 
 export default function EsqueceuSenha02(){
     
     const navigation = useNavigation()
     const [senha, setSenhaEsq] = useState()
     const [confSenha, setConfSenhaEsq] = useState()
+    const route = useRoute()
+    const { email } = route.params
     
-    function validarAlterar(){
-        navigation.replace("Login")
-        alert('✅ Troca de senha realizada! Agora, entre em sua conta.')
+    function mudarSenha(){
+    
+        const mudarSenha = async () => {
+
+        if (!senha || !confSenha) {
+            alert("Preencha todos os campos!");
+            return;
+        }
+
+        if (senha !== confSenha) {
+            alert("As senhas não coincidem!");
+            return;
+        }
+
+        try {
+
+            const response = await api.put('/usuario/alterar-senha', {
+                email: email,
+                novaSenha: senha
+
+            })
+
+            console.log("Senha alterada!")
+            navigation.replace("Login")
+            alert('✅ Troca de senha realizada! Agora, entre em sua conta.')
+
+        }catch(error){
+            if (error.response && error.response.status === 400) {
+            alert("Troca de senha não realizada, tente novamente mais tarde!")
+            } else {
+            alert("Erro no servidor, tente novamente mais tarde!")
+            }
+        }}
+
+        mudarSenha()
+
     }
 
     return(
@@ -54,14 +90,14 @@ export default function EsqueceuSenha02(){
             placeholder='Confirmar senha'
         />
 
-        <TouchableOpacity style={styles.botaoAlterar} onPress={validarAlterar}>
+        <TouchableOpacity style={styles.botaoAlterar} onPress={mudarSenha}>
             <LinearGradient 
             colors={['#160161', '#2602a8']}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.gradientBotaoAlterar}
             >
-            <Text style={styles.textoAlterar}>ENVIAR LINK DE RECUPERAÇÃO</Text>
+            <Text style={styles.textoAlterar}>MUDAR SENHA</Text>
             </LinearGradient>
         </TouchableOpacity>
 

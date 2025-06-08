@@ -3,6 +3,7 @@ import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } 
 import { LinearGradient } from 'expo-linear-gradient'
 import { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
+import api from '../../../src/axios/api'
 
 export default function CriarConta() {
   
@@ -12,8 +13,37 @@ export default function CriarConta() {
   const [senha, setSenhaCad] = useState()
 
   function confirmarCadastro(){
-    navigation.replace('Login')
-    alert('✅ Cadastro realizado! Agora, entre em sua conta.')
+    
+    const confirmarCadastro = async () => {
+
+      if (!email || !usuario || !senha) {
+        alert("Preencha todos os campos!");
+        return;
+      }
+
+      try {
+
+        const response = await api.post('/usuario/cadastro', {
+          usuario: usuario,
+          email: email,
+          senha: senha
+
+        })
+
+        console.log("Cadastro Realizado!")
+        navigation.replace('Login')
+        alert('✅ Cadastro realizado! Agora, entre em sua conta.')
+
+      }catch(error){
+        if (error.response && error.response.status === 400) {
+          alert("Cadastro não realizado, tente novamente mais tarde!")
+        } else {
+          alert("Erro no servidor, tente novamente mais tarde!")
+        }
+      }
+
+    } 
+    confirmarCadastro()
   }
 
   return (

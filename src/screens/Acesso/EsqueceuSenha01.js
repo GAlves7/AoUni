@@ -3,14 +3,46 @@ import { useNavigation } from '@react-navigation/native'
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
+import api from '../../../src/axios/api'
 
 export default function EsqueceuSenha01(){
 
     const navigation = useNavigation()
     const [email, setEmailEsq] = useState()
 
-    function validarEnvio(){
-        navigation.navigate("EsqueceuSenha02")
+    function verificarEmail (){
+    
+      const verificarEmail = async () => {
+
+        if (!email) {
+          alert("Preencha todos os campos!");
+          return
+        }
+
+        try {
+
+          const response = await api.post('/usuario/verificar-email', {
+            
+            email: email
+            
+          })
+        
+            console.log("Email existe")
+            navigation.navigate("EsqueceuSenha02", {email: email})
+
+
+        }catch(error) {
+          if (error.response && error.response.status === 400) {
+            alert("Email incorreto!")
+          } else {
+            alert("Erro no servidor!")
+          }
+        }
+
+      }
+
+      verificarEmail()
+
     }
 
     return(
@@ -43,14 +75,14 @@ export default function EsqueceuSenha01(){
                 placeholder='Email'
             />
 
-            <TouchableOpacity style={styles.botaoEnviar} onPress={validarEnvio}>
+            <TouchableOpacity style={styles.botaoEnviar} onPress={verificarEmail}>
                 <LinearGradient 
                 colors={['#160161', '#2602a8']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.gradientBotaoEnviar}
                 >
-                <Text style={styles.textoEnviar}>ENVIAR LINK DE RECUPERAÇÃO</Text>
+                <Text style={styles.textoEnviar}>VERIFICAR EMAIL</Text>
                 </LinearGradient>
             </TouchableOpacity>
 

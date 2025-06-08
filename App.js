@@ -11,8 +11,7 @@ import Direito from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar/Dire
 import InfoGrupoMed from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar/InformacoesGrupo/InfoGrupoMed'
 import InfoGrupoDir from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar/InformacoesGrupo/InfoGrupoDir'
 import GrupoNassauMed from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar/InformacoesGrupo/Grupos/GrupoNassauMed'
-import GrupoNassauDir from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar/InformacoesGrupo/Grupos/GrupoNassauMed'
-import Salvos from './src/screens/BarraNavegacao/Funcionalidades/Perfil/Salvos'
+import GrupoNassauDir from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar/InformacoesGrupo/Grupos/GrupoNassauDir'
 import CriarNovaPubli from './src/screens/BarraNavegacao/Funcionalidades/Feed/CriarNovaPubli'
 
 
@@ -34,7 +33,6 @@ export default function App() {
         <Stack.Screen name="InfoGrupoDir" component={InfoGrupoDir} />
         <Stack.Screen name="GrupoNassauMed" component={GrupoNassauMed} />
         <Stack.Screen name="GrupoNassauDir" component={GrupoNassauDir} />
-        <Stack.Screen name="Salvos" component={Salvos} />
         <Stack.Screen name="CriarNovaPubli" component={CriarNovaPubli} />
         <Stack.Screen name="Rotas" component={Routes} />
       </Stack.Navigator>

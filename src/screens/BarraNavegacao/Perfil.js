@@ -24,16 +24,18 @@ export default function Search(){
                 <Text style={styles.txtNome}>Seu nome</Text>
             </View>
 
+            
+
             <View style={styles.linha} />
 
             <View style={styles.opcoesContainer}>
 
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.opcao}
-                    onPress={() => navigation.navigate('Salvos')}
+                    onPress={() => navigation.navigate('EditarPerfil')}
                 >
-                    <Ionicons name="bookmark-outline" size={24} color="#fff" />
-                    <Text style={styles.textoOpcao}>Salvos</Text>
+                    <Ionicons name="create-outline" size={24} color="#fff" />
+                    <Text style={styles.textoOpcao}>Editar Perfil</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
