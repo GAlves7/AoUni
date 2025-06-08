@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
 import api from '../../../src/axios/api'
@@ -15,7 +15,7 @@ export default function EsqueceuSenha01(){
       const verificarEmail = async () => {
 
         if (!email) {
-          alert("Preencha todos os campos!");
+          Alert.alert('Preencha corretamente!','Preencha todos os campos e tente novamente.')
           return
         }
 
@@ -33,9 +33,9 @@ export default function EsqueceuSenha01(){
 
         }catch(error) {
           if (error.response && error.response.status === 400) {
-            alert("Email incorreto!")
+            Alert.alert('Email incorreto!','Email incorreto ou inexistente.')
           } else {
-            alert("Erro no servidor!")
+            Alert.alert('Erro no servidor!','Tente novamente mais tarde.')
           }
         }
 

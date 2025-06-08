@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
+import api from '../../../../axios/api'
 
 export default function CriarNovaPubli() {
   const navigation = useNavigation()
@@ -26,12 +27,43 @@ export default function CriarNovaPubli() {
   }
 
   function publish() {
-    if (!imageUri) {
-      Alert.alert('Faltou a imagem', 'Selecione uma imagem antes de publicar.')
+    if (!imageUri || !caption) {
+      Alert.alert('Preencha corretamente!','Preencha todos os campos e tente novamente.')
       return
     }
 
-    navigation.replace('Rotas', { screen: 'Feed' }) 
+    const enviarFormulario = async () => {
+      const formData = new FormData();
+
+      formData.append('conteudo', caption);
+      formData.append('idUsuario', 1);
+
+      const uriParts = imageUri.split('.')
+      const fileType = uriParts[uriParts.length - 1]
+
+      formData.append('arquivo', {
+        uri: imageUri,
+        name: `imagem.${fileType}`,
+        type: `image/${fileType}`,
+      })
+
+      try {
+        const response = await api.post('/postagem', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        console.log('Resposta da API:', response.data);
+      } catch (error) {
+        console.error('Erro ao enviar:', error);
+      }
+
+    };
+
+    navigation.replace('Rotas', { screen: 'Feed' })
+
+    enviarFormulario()
   }
 
   return (

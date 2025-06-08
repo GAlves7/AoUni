@@ -1,5 +1,5 @@
 import { LinearGradient } from 'expo-linear-gradient'
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform, Alert } from 'react-native'
 import { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
@@ -18,12 +18,12 @@ export default function EsqueceuSenha02(){
         const mudarSenha = async () => {
 
         if (!senha || !confSenha) {
-            alert("Preencha todos os campos!");
+            Alert.alert('Preencha corretamente!','Preencha todos os campos e tente novamente.')
             return;
         }
 
         if (senha !== confSenha) {
-            alert("As senhas não coincidem!");
+            Alert.alert('Senhas incoerentes!','As senhas não coincidem, digite corretamente.')
             return;
         }
 
@@ -37,13 +37,13 @@ export default function EsqueceuSenha02(){
 
             console.log("Senha alterada!")
             navigation.replace("Login")
-            alert('✅ Troca de senha realizada! Agora, entre em sua conta.')
+            Alert.alert('✅ Troca de senha realizada!', 'Agora, entre em sua conta.')
 
         }catch(error){
             if (error.response && error.response.status === 400) {
-            alert("Troca de senha não realizada, tente novamente mais tarde!")
+            Alert.alert("Troca de senha não realizada!", "Tente novamente mais tarde!")
             } else {
-            alert("Erro no servidor, tente novamente mais tarde!")
+            Alert.alert("Erro no servidor!", "Tente novamente mais tarde!")
             }
         }}
 

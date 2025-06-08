@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import api from '../../../src/axios/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Login({}){
   
@@ -15,7 +16,7 @@ export default function Login({}){
     const validarLogin = async () => {
 
       if (!email || !senha) {
-        alert("Preencha todos os campos!");
+        Alert.alert('Preencha corretamente!','Preencha todos os campos e tente novamente.')
         return
       }
 
@@ -34,14 +35,14 @@ export default function Login({}){
 
       }catch(error) {
         if (error.response && error.response.status === 400) {
-          alert("Email ou senha incorretos!")
+          Alert.alert('Email ou senha incorretos!','Preencha corretamente.')
         } else {
-          alert("Erro no servidor!")
+          Alert.alert('Erro no servidor!','Tente novamente mais tarde.')
         }
       }
 
     }
-
+      
       validarLogin()
 
   }

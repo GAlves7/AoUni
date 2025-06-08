@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform, Alert} from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
@@ -17,7 +17,7 @@ export default function CriarConta() {
     const confirmarCadastro = async () => {
 
       if (!email || !usuario || !senha) {
-        alert("Preencha todos os campos!");
+        Alert.alert('Preencha corretamente!','Preencha todos os campos e tente novamente.')
         return;
       }
 
@@ -32,13 +32,13 @@ export default function CriarConta() {
 
         console.log("Cadastro Realizado!")
         navigation.replace('Login')
-        alert('✅ Cadastro realizado! Agora, entre em sua conta.')
+        Alert.alert("✅ Cadastro realizado!", "Agora, entre em sua conta.")
 
       }catch(error){
         if (error.response && error.response.status === 400) {
-          alert("Cadastro não realizado, tente novamente mais tarde!")
+          Alert.alert('Cadastro não realizado!', 'Tente novamente mais tarde!')
         } else {
-          alert("Erro no servidor, tente novamente mais tarde!")
+          Alert.alert('Erro no servidor!', 'Tente novamente mais tarde!')
         }
       }
 
