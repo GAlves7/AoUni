@@ -11,40 +11,39 @@ export default function Login({}){
   const [email, setEmailLog] = useState()
   const [senha, setSenhaLog] = useState()
 
-  function validarLogin (){
-    
-    const validarLogin = async () => {
-
+  function validarLogin () {
+    const executarLogin = async () => {
       if (!email || !senha) {
-        Alert.alert('Preencha corretamente!','Preencha todos os campos e tente novamente.')
+        Alert.alert('Preencha corretamente!', 'Preencha todos os campos e tente novamente.')
         return
       }
 
       try {
-
         const response = await api.post('/usuario/login', {
-          
           email: email,
           senha: senha
-          
         })
-      
-          console.log("Login Válido.")
-          navigation.replace("Rotas")
 
+        console.log("Login Válido.")
 
-      }catch(error) {
+        const usuarioIdResponse = await api.get(`/usuario/email/${email}`)
+        const idUser = usuarioIdResponse.data.id
+
+        await AsyncStorage.setItem('idUser', String(idUser))
+        console.log('ID do usuário salvo:', idUser)
+
+        navigation.replace("Rotas")
+
+      } catch (error) {
         if (error.response && error.response.status === 400) {
-          Alert.alert('Email ou senha incorretos!','Preencha corretamente.')
+          Alert.alert('Email ou senha incorretos!', 'Preencha corretamente.')
         } else {
-          Alert.alert('Erro no servidor!','Tente novamente mais tarde.')
+          Alert.alert('Erro no servidor!', 'Tente novamente mais tarde.')
         }
       }
-
     }
-      
-      validarLogin()
 
+    executarLogin()
   }
 
   const esqueciSenha = () => {

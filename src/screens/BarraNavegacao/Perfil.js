@@ -2,13 +2,16 @@ import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
+import * as ImagePicker from 'expo-image-picker'
 
 export default function Search(){
 
     const navigation = useNavigation()
 
     return(
+
         <SafeAreaView style={styles.container}>
+
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={25} color="#fff" />
@@ -23,8 +26,6 @@ export default function Search(){
                 />
                 <Text style={styles.txtNome}>Seu nome</Text>
             </View>
-
-            
 
             <View style={styles.linha} />
 
@@ -47,8 +48,8 @@ export default function Search(){
                 </TouchableOpacity>
             </View>
 
-
         </SafeAreaView>
+
     )
 }
 

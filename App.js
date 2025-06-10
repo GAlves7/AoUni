@@ -13,6 +13,7 @@ import InfoGrupoDir from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar
 import GrupoNassauMed from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar/InformacoesGrupo/Grupos/GrupoNassauMed'
 import GrupoNassauDir from './src/screens/BarraNavegacao/Funcionalidades/Pesquisar/InformacoesGrupo/Grupos/GrupoNassauDir'
 import CriarNovaPubli from './src/screens/BarraNavegacao/Funcionalidades/Feed/CriarNovaPubli'
+import EditarPerfil from './src/screens/BarraNavegacao/Funcionalidades/Perfil/EditarPerfil'
 
 
 import Routes from './src/Routes'
@@ -34,6 +35,7 @@ export default function App() {
         <Stack.Screen name="GrupoNassauMed" component={GrupoNassauMed} />
         <Stack.Screen name="GrupoNassauDir" component={GrupoNassauDir} />
         <Stack.Screen name="CriarNovaPubli" component={CriarNovaPubli} />
+        <Stack.Screen name="EditarPerfil" component={EditarPerfil} />
         <Stack.Screen name="Rotas" component={Routes} />
       </Stack.Navigator>
     </NavigationContainer>

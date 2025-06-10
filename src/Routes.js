@@ -2,11 +2,9 @@ import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { LinearGradient } from 'expo-linear-gradient'
 import { Ionicons } from '@expo/vector-icons'
-
 import Feed from './screens/BarraNavegacao/Feed'
 import Pesquisar from './screens/BarraNavegacao/Pesquisar'
 import Groups from './screens/BarraNavegacao/Grupos'
-import Notificacoes from './screens/BarraNavegacao/Notificacoes'
 import Perfil from './screens/BarraNavegacao/Perfil'
 
 const Tab = createBottomTabNavigator()
@@ -46,9 +44,6 @@ export default function Routes(){
                         case 'Grupos':
                             iconName = focused ? 'chatbox' : 'chatbox-outline'
                             break
-                        case 'Notificacoes':
-                            iconName = focused ? 'notifications' : 'notifications-outline'
-                            break
                         case 'Perfil':
                             iconName = focused ? 'person' : 'person-outline'
                             break
@@ -64,7 +59,6 @@ export default function Routes(){
             <Tab.Screen name="Feed" component={Feed} />
             <Tab.Screen name="Pesquisar" component={Pesquisar} />
             <Tab.Screen name="Grupos" component={Groups} />
-            <Tab.Screen name="Notificacoes" component={Notificacoes} />
             <Tab.Screen name="Perfil" component={Perfil} />
             
 
