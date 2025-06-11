@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
+import api from '../../../src/axios/api'
 
 export default function Search(){
 
@@ -24,7 +25,7 @@ export default function Search(){
                     source={require("../../assets/logo.png")}
                     style={styles.logo}
                 />
-                <Text style={styles.txtNome}>Seu nome</Text>
+                <Text style={styles.txtNome}>Usuario</Text>
             </View>
 
             <View style={styles.linha} />

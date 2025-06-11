@@ -1,13 +1,30 @@
-import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import api from '../../../../../../src/axios/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export default function Search(){
+export default function Search() {
 
     const navigation = useNavigation()
+    
+    async function validarEntrar() {
+    const idUser = await AsyncStorage.getItem('idUser')
+    console.log('ID do usuário:', idUser)
 
-    return(
+    try {
+        const response = await api.put('/chat/1/usuario', {
+            idUsuario: Number(idUser)
+        })
+        navigation.navigate('GrupoNassauMed')
+    } catch (error) {
+        console.error('Erro ao enviar entrada de chat', error.response?.data || error.message)
+    }
+}
+
+    return (
         <SafeAreaView style={styles.container}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.voltar}>
@@ -41,7 +58,7 @@ export default function Search(){
                 </View>
             </View>
 
-            <TouchableOpacity style={styles.botaoEntrar} onPress={() => navigation.navigate('GrupoNassauMed')}>
+            <TouchableOpacity style={styles.botaoEntrar} onPress={validarEntrar}>
                 <Text style={styles.textoBotao}>ENTRAR</Text>
             </TouchableOpacity>
         </SafeAreaView>

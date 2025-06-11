@@ -10,7 +10,7 @@ export default function Search(){
     const [pesquisa, setPesquisa] = useState("")
     
     const faculdades = [{
-        id: '1',
+        id: '2',
         nome: 'UNINASSAU Caruaru – Direito',
         imagem: require('../../../../assets/nassau.png'),
         rota: 'InfoGrupoDir'

@@ -8,7 +8,7 @@ export default function Search(){
 
     const navigation = useNavigation()
     const [pesquisa, setPesquisa] = useState("")
-    
+
     const faculdades = [{
         id: '1',
         nome: 'UNINASSAU Caruaru – Medicina',

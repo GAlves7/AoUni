@@ -36,7 +36,7 @@ export default function CriarNovaPubli() {
     const idUser = await AsyncStorage.getItem('idUser')
 
     if (!idUser) {
-      Alert.alert('Erro', 'Usuário não identificado.')
+      console.log('Erro! Usuário não identificado.')
       return
     }
 

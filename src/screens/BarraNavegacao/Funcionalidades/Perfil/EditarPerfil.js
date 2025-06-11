@@ -4,6 +4,8 @@ import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import * as ImagePicker from 'expo-image-picker'
 import { useNavigation } from '@react-navigation/native'
+import api from '../../../../../src/axios/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function EditarPerfil() {
     const navigation = useNavigation()
@@ -20,6 +22,43 @@ export default function EditarPerfil() {
 
         if (!result.canceled) {
             setImage(result.assets[0].uri)
+        }
+    }
+
+    const salvarAlteracoes = async () => {
+        const idUser = await AsyncStorage.getItem('idUser')
+
+        if (!idUser) {
+            console.log('ID do usuário não encontrado.')
+            return
+        }
+
+        const formData = new FormData()
+
+        if (image) {
+            const filename = image.split('/').pop()
+            const ext = filename.split('.').pop()
+            const mimeType = `image/${ext}`
+
+            formData.append('foto', {
+                uri: image,
+                name: filename,
+                type: mimeType
+            })
+        }
+
+        try {
+            await api.post(`/usuario/${idUser}/foto`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            })
+
+            console.log('Perfil atualizado com sucesso!')
+            navigation.replace('Rotas', { screen: 'Perfil' })
+
+        } catch (error) {
+            console.error('Erro ao atualizar perfil:', error.response || error.message)
         }
     }
 
@@ -50,7 +89,7 @@ export default function EditarPerfil() {
                 onChangeText={setNome}
             />
 
-            <TouchableOpacity style={styles.botaoSalvar}>
+            <TouchableOpacity style={styles.botaoSalvar} onPress={salvarAlteracoes}>
                 <Text style={styles.txtBotao}>Salvar Alterações</Text>
             </TouchableOpacity>
 
