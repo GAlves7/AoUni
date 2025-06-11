@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 export default function EditarPerfil() {
     const navigation = useNavigation()
     const [image, setImage] = useState(null)
-    const [nome, setNome] = useState('')
+    const [usuario, setUsuario] = useState('')
 
     const escolherImagem = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -33,9 +33,9 @@ export default function EditarPerfil() {
             return
         }
 
-        const formData = new FormData()
-
-        if (image) {
+        try {
+            if (image) {
+            const formData = new FormData()
             const filename = image.split('/').pop()
             const ext = filename.split('.').pop()
             const mimeType = `image/${ext}`
@@ -45,14 +45,19 @@ export default function EditarPerfil() {
                 name: filename,
                 type: mimeType
             })
-        }
 
-        try {
             await api.post(`/usuario/${idUser}/foto`, formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data',
+                'Content-Type': 'multipart/form-data',
                 },
             })
+}
+
+            // 2. Atualizar o nome (se preenchido)
+            if (usuario.trim() !== '') {
+            await api.put(`/usuario/${idUser}/alterar-nome`, { novoNome:usuario })
+            await AsyncStorage.setItem('usuarioNome', usuario)
+            }
 
             console.log('Perfil atualizado com sucesso!')
             navigation.replace('Rotas', { screen: 'Perfil' })
@@ -83,10 +88,10 @@ export default function EditarPerfil() {
 
             <TextInput
                 style={styles.input}
-                placeholder="Digite seu novo nome"
+                placeholder="Novo usuário"
                 placeholderTextColor="#aaa"
-                value={nome}
-                onChangeText={setNome}
+                value={usuario}
+                onChangeText={setUsuario}
             />
 
             <TouchableOpacity style={styles.botaoSalvar} onPress={salvarAlteracoes}>

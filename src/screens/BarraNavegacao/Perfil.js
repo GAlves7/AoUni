@@ -1,13 +1,28 @@
+import React, { useEffect, useState, useCallback } from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
 import api from '../../../src/axios/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Search(){
 
     const navigation = useNavigation()
+
+    const [nomeUsuario, setNomeUsuario] = useState('')
+
+    useFocusEffect(
+        useCallback(() => {
+            const carregarNome = async () => {
+            const usuarioNome = await AsyncStorage.getItem('usuarioNome')
+            if (usuarioNome) setNomeUsuario(usuarioNome)
+            }
+
+            carregarNome()
+        }, [])
+    )
 
     return(
 
@@ -25,7 +40,7 @@ export default function Search(){
                     source={require("../../assets/logo.png")}
                     style={styles.logo}
                 />
-                <Text style={styles.txtNome}>Usuario</Text>
+                <Text style={styles.txtNome}>{nomeUsuario}</Text>
             </View>
 
             <View style={styles.linha} />

@@ -26,11 +26,16 @@ export default function Login({}){
 
         console.log("Login Válido.")
 
-        const usuarioIdResponse = await api.get(`/usuario/email/${email}`)
-        const idUser = usuarioIdResponse.data.id
+        
+        const idUser = response.data.id
 
         await AsyncStorage.setItem('idUser', String(idUser))
         console.log('ID do usuário salvo:', idUser)
+
+        const usuarioNome = response.data.usuario
+
+        await AsyncStorage.setItem('usuarioNome', String(usuarioNome))
+        console.log('ID do usuário salvo:', usuarioNome)
 
         navigation.replace("Rotas")
 
