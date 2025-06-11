@@ -4,30 +4,54 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import api from '../../../../../../axios/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function GroupChat() {
   const navigation = useNavigation()
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
+  const [userId, setUserId] = useState(null)
 
-  // Buscar mensagens a cada 3 segundos
   useEffect(() => {
     const fetchMessages = async () => {
       try {
-        const response = await api.get('/chat/1/mensagem')
+        const response = await api.get('/chat/1/mensagem');
         setMessages(response.data);
       } catch (error) {
-        console.error('Erro ao buscar mensagens:', error)
+        console.error('Erro ao buscar mensagens:', error);
       }
     };
 
-    // Buscar imediatamente ao carregar
+    const loadUserId = async () => {
+      const id = await AsyncStorage.getItem('idUser');
+      setUserId(id);
+    };
+
+    loadUserId();
     fetchMessages();
 
-    const interval = setInterval(fetchMessages, 3000)
-
+    const interval = setInterval(fetchMessages, 3000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleSendMessage = async () => {
+
+    const idUser = await AsyncStorage.getItem('idUser')
+
+    if (!message.trim()) return;
+
+    try {
+      const response = await api.put('/chat/1/mensagem', {
+        mensagem: message,
+        id: idUser,
+      });
+
+      setMessages(prev => [...prev, response.data]);
+      setMessage('');
+    } catch (error) {
+      console.error('Erro ao enviar mensagem:', error);
+    }
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,12 +70,24 @@ export default function GroupChat() {
       </View>
 
       <ScrollView style={styles.messagesContainer}>
-        {messages.map((item, index) => (
-          <View key={index} style={styles.messageBubble}>
-            <Text style={styles.messageUser}>{item.nome}:</Text>
-            <Text style={styles.messageText}>{item.mensagem}</Text>
-          </View>
-        ))}
+        {messages.map((item, index) => {
+          const isMyMessage = item.id?.toString() === userId
+
+          return (
+            <View
+              key={index}
+              style={[
+                styles.messageBubble,
+                isMyMessage ? styles.myMessage : styles.otherMessage
+              ]}
+            >
+              <Text style={[styles.messageUser, isMyMessage && styles.myUserName]}>
+                {item.nome}:
+              </Text>
+              <Text style={styles.messageText}>{item.mensagem}</Text>
+            </View>
+          );
+        })}
       </ScrollView>
 
       <KeyboardAvoidingView
@@ -71,7 +107,7 @@ export default function GroupChat() {
             onChangeText={setMessage}
           />
 
-          <TouchableOpacity style={styles.sendButton} onPress={() => { }}>
+          <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
             <Ionicons name="send" size={22} color="#fff" />
           </TouchableOpacity>
         </View>
@@ -152,4 +188,15 @@ const styles = StyleSheet.create({
     padding: 6,
     marginLeft: 6,
   },
+  myMessage: {
+    alignSelf: 'flex-end',
+    backgroundColor: '#222',
+  },
+  otherMessage: {
+    alignSelf: 'flex-start',
+    backgroundColor: '#222',
+  },
+  myUserName: {
+    color: '#4ea0ff',
+  }
 });
