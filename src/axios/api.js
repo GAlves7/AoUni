@@ -9,7 +9,7 @@ const emulador = 'http://10.0.2.2:8080/'
 
 // Cria uma instância do Axios com a URL base configurada para o emulador
 const api = axios.create({
-    baseURL: local
+    baseURL: emulador
 })
 
 // Exporta a instância da API para uso em outras partes do projeto
