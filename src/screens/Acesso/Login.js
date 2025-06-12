@@ -1,3 +1,4 @@
+// Importação de hooks e componentes essenciais do React Native e navegação
 import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform, Alert } from 'react-native'
@@ -5,20 +6,27 @@ import { LinearGradient } from 'expo-linear-gradient'
 import api from '../../../src/axios/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+// Componente funcional da tela de Login
 export default function Login({}){
-  
+
+  // Hook para navegação entre telas
   const navigation = useNavigation()
+
+  // Estados para armazenar email e senha digitados
   const [email, setEmailLog] = useState()
   const [senha, setSenhaLog] = useState()
 
+  // Função que valida e executa o login do usuário
   function validarLogin () {
     const executarLogin = async () => {
+      // Verifica se todos os campos foram preenchidos
       if (!email || !senha) {
         Alert.alert('Preencha corretamente!', 'Preencha todos os campos e tente novamente.')
         return
       }
 
       try {
+        // Requisição POST para o endpoint de login
         const response = await api.post('/usuario/login', {
           email: email,
           senha: senha
@@ -26,20 +34,21 @@ export default function Login({}){
 
         console.log("Login Válido.")
 
-        
+        // Armazena o ID do usuário no AsyncStorage
         const idUser = response.data.id
-
         await AsyncStorage.setItem('idUser', String(idUser))
         console.log('ID do usuário salvo:', idUser)
 
+        // Armazena o nome do usuário no AsyncStorage
         const usuarioNome = response.data.usuario
-
         await AsyncStorage.setItem('usuarioNome', String(usuarioNome))
-        console.log('ID do usuário salvo:', usuarioNome)
+        console.log('Nome do usuário salvo:', usuarioNome)
 
+        // Navega para a tela principal
         navigation.replace("Rotas")
 
       } catch (error) {
+        // Trata erro de autenticação
         if (error.response && error.response.status === 400) {
           Alert.alert('Email ou senha incorretos!', 'Preencha corretamente.')
         } else {
@@ -51,67 +60,76 @@ export default function Login({}){
     executarLogin()
   }
 
+  // Navega para a tela de recuperação de senha
   const esqueciSenha = () => {
     navigation.navigate("EsqueceuSenha01")
   }
 
+  // Navega para a tela de criação de conta
   function pageCadastro(){
     navigation.navigate("CriarConta")
   }
 
   return(
-    
     <LinearGradient
       colors={['#0a002e', '#0f0142']}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
       style={styles.container}
     >
-    
-    <Image
-      source={require("../../assets/logo.png")}
-      style={styles.logo}
-    />
+      {/* Logo do app */}
+      <Image
+        source={require("../../assets/logo.png")}
+        style={styles.logo}
+      />
 
-    <Text style={styles.titulo}>Bem-Vindo (a) ao AOUNI!</Text>
+      {/* Título de boas-vindas */}
+      <Text style={styles.titulo}>Bem-Vindo (a) ao AOUNI!</Text>
 
-    <TextInput
-      style={styles.input}
-      onChangeText={value =>setEmailLog(value)}
-      placeholder='Email'
-    />
-    
-    <TextInput
-      style={styles.input}
-      onChangeText={value =>setSenhaLog(value)}
-      placeholder='Senha'
-    />
+      {/* Campo de input para email */}
+      <TextInput
+        style={styles.input}
+        onChangeText={value => setEmailLog(value)}
+        placeholder='Email'
+      />
+      
+      {/* Campo de input para senha */}
+      <TextInput
+        style={styles.input}
+        onChangeText={value => setSenhaLog(value)}
+        placeholder='Senha'
+        secureTextEntry={true}
+      />
 
-    <View style={styles.recuperarSenhaContainer}>
-      <TouchableOpacity onPress={esqueciSenha}>
-        <Text style={styles.recuperarSenha}>Recuperar senha</Text>
+      {/* Link para recuperar senha */}
+      <View style={styles.recuperarSenhaContainer}>
+        <TouchableOpacity onPress={esqueciSenha}>
+          <Text style={styles.recuperarSenha}>Recuperar senha</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Botão para realizar login */}
+      <TouchableOpacity style={styles.botaoLogin} onPress={validarLogin}>
+        <LinearGradient 
+          colors={['#160161', '#2602a8']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.gradientBotaoLogin}
+        >
+          <Text style={styles.textoLogin}>ENTRAR</Text>
+        </LinearGradient>
       </TouchableOpacity>
-    </View>
+      
+      {/* Botão para navegar até a criação de conta */}
+      <TouchableOpacity style={styles.botaoCadastro} onPress={pageCadastro}>
+          <Text style={styles.textoCadastro}>CRIAR CONTA</Text>
+      </TouchableOpacity>
 
-    <TouchableOpacity style={styles.botaoLogin} onPress={validarLogin}>
-      <LinearGradient 
-        colors={['#160161', '#2602a8']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={styles.gradientBotaoLogin}
-      >
-        <Text style={styles.textoLogin}>ENTRAR</Text>
-      </LinearGradient>
-    </TouchableOpacity>
-    
-    <TouchableOpacity style={styles.botaoCadastro} onPress={pageCadastro}>
-        <Text style={styles.textoCadastro}>CRIAR CONTA</Text>
-    </TouchableOpacity>
-
-  </LinearGradient>
+    </LinearGradient>
   )
 }
 
+// Estilos da tela de login
 const styles = StyleSheet.create({
   container:{
     flex:1,

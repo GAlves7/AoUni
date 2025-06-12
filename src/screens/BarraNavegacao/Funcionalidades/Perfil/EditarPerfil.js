@@ -1,3 +1,4 @@
+// Tela para editar o perfil do usuário, permitindo alterar foto e nome
 import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
@@ -9,9 +10,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function EditarPerfil() {
     const navigation = useNavigation()
+
+    // Estado para armazenar a URI da imagem selecionada
     const [image, setImage] = useState(null)
+    // Estado para armazenar o novo nome do usuário
     const [usuario, setUsuario] = useState('')
 
+    // Função para abrir a galeria e escolher uma imagem, com edição quadrada (1:1)
     const escolherImagem = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: 'Images',
@@ -25,38 +30,37 @@ export default function EditarPerfil() {
         }
     }
 
+    // Função para salvar as alterações da foto e/ou do nome do usuário
     const salvarAlteracoes = async () => {
         const idUser = await AsyncStorage.getItem('idUser')
-
         if (!idUser) {
             console.log('ID do usuário não encontrado.')
             return
         }
 
         try {
+            // Se uma imagem foi selecionada, envia para a API via multipart/form-data
             if (image) {
-            const formData = new FormData()
-            const filename = image.split('/').pop()
-            const ext = filename.split('.').pop()
-            const mimeType = `image/${ext}`
+                const formData = new FormData()
+                const filename = image.split('/').pop()
+                const ext = filename.split('.').pop()
+                const mimeType = `image/${ext}`
 
-            formData.append('foto', {
-                uri: image,
-                name: filename,
-                type: mimeType
-            })
+                formData.append('foto', {
+                    uri: image,
+                    name: filename,
+                    type: mimeType
+                })
 
-            await api.post(`/usuario/${idUser}/foto`, formData, {
-                headers: {
-                'Content-Type': 'multipart/form-data',
-                },
-            })
-}
+                await api.post(`/usuario/${idUser}/foto`, formData, {
+                    headers: { 'Content-Type': 'multipart/form-data' },
+                })
+            }
 
-            // 2. Atualizar o nome (se preenchido)
+            // Se o nome foi alterado e não está vazio, atualiza no backend e no AsyncStorage
             if (usuario.trim() !== '') {
-            await api.put(`/usuario/${idUser}/alterar-nome`, { novoNome:usuario })
-            await AsyncStorage.setItem('usuarioNome', usuario)
+                await api.put(`/usuario/${idUser}/alterar-nome`, { novoNome: usuario })
+                await AsyncStorage.setItem('usuarioNome', usuario)
             }
 
             console.log('Perfil atualizado com sucesso!')
@@ -67,6 +71,7 @@ export default function EditarPerfil() {
         }
     }
 
+    // Renderiza a interface de edição com opção de foto, campo para nome e botão de salvar
     return (
         <SafeAreaView style={styles.container}>
 
@@ -78,6 +83,7 @@ export default function EditarPerfil() {
             </View>
 
             <TouchableOpacity style={styles.imgContainer} onPress={escolherImagem}>
+                {/* Mostra a imagem selecionada ou um ícone padrão */}
                 {image ? (
                     <Image source={{ uri: image }} style={styles.imagem} />
                 ) : (
@@ -86,6 +92,7 @@ export default function EditarPerfil() {
                 <Text style={styles.txtImagem}>Selecionar imagem</Text>
             </TouchableOpacity>
 
+            {/* Campo para digitar novo nome de usuário */}
             <TextInput
                 style={styles.input}
                 placeholder="Novo usuário"
@@ -94,6 +101,7 @@ export default function EditarPerfil() {
                 onChangeText={setUsuario}
             />
 
+            {/* Botão para salvar as alterações feitas */}
             <TouchableOpacity style={styles.botaoSalvar} onPress={salvarAlteracoes}>
                 <Text style={styles.txtBotao}>Salvar Alterações</Text>
             </TouchableOpacity>

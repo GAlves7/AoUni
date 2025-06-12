@@ -1,28 +1,33 @@
+// Componente de busca para faculdades do curso de Medicina
 import React, { useState } from 'react'
 import { StyleSheet, View, TextInput, TouchableOpacity, Text, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { useNavigation } from '@react-navigation/native'
 
-export default function Search(){
-
+export default function Search() {
     const navigation = useNavigation()
+
+    // Estado que armazena o texto digitado no campo de busca
     const [pesquisa, setPesquisa] = useState("")
 
+    // Lista estática de faculdades com informações básicas para exibição
     const faculdades = [{
         id: '1',
         nome: 'UNINASSAU Caruaru – Medicina',
         imagem: require('../../../../assets/nassau.png'),
         rota: 'InfoGrupoMed'
-    }]   
+    }]
 
+    // Filtra a lista de faculdades pelo texto da busca, ignorando maiúsculas/minúsculas
     const faculdadesFiltradas = faculdades.filter(item =>
         item.nome.toLowerCase().includes(pesquisa.toLowerCase())
     )
 
-
-    return(
+    // Interface com header, campo de pesquisa e lista clicável das faculdades filtradas
+    return (
         <SafeAreaView style={styles.container}>
+
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="arrow-back" size={25} color="#fff" />
@@ -33,7 +38,7 @@ export default function Search(){
                     <Text style={styles.titulo}>MEDICINA</Text>
                 </View>
 
-                <View style={{ width: 25 }} />
+                <View style={{ width: 25 }} /> {/* Espaço reservado para balancear o layout */}
             </View>
 
             <View style={styles.caixaPesq}>
@@ -48,6 +53,7 @@ export default function Search(){
 
             <View style={styles.linha} />
 
+            {/* Lista de faculdades filtradas; cada item é um botão que navega para a rota correspondente */}
             {faculdadesFiltradas.map(item => (
                 <TouchableOpacity
                     key={item.id}
@@ -58,12 +64,13 @@ export default function Search(){
                     <Text style={styles.faculdadeNome}>{item.nome}</Text>
                 </TouchableOpacity>
             ))}
+
         </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         backgroundColor: "#141414",
     },
@@ -123,8 +130,8 @@ const styles = StyleSheet.create({
         borderColor: '#444',
         padding: 15,
         marginHorizontal: 20,
-        marginTop: 25,      
-        gap: 15,            
+        marginTop: 25,
+        gap: 15,
     },
     faculdadeLogo: {
         width: 40,
@@ -135,6 +142,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontSize: 14,
         fontWeight: 'bold',
-        flexShrink: 1,     
+        flexShrink: 1,
     },
 })

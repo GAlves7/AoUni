@@ -1,3 +1,6 @@
+// Tela de descrição do grupo de Medicina da UNINASSAU Caruaru
+// Permite ao usuário visualizar informações do grupo e entrar nele via API
+
 import React from 'react'
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -7,25 +10,28 @@ import api from '../../../../../../src/axios/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function Search() {
-
     const navigation = useNavigation()
-    
-    async function validarEntrar() {
-    const idUser = await AsyncStorage.getItem('idUser')
-    console.log('ID do usuário:', idUser)
 
-    try {
-        const response = await api.put('/chat/1/usuario', {
-            idUsuario: Number(idUser)
-        })
-        navigation.navigate('GrupoNassauMed')
-    } catch (error) {
-        console.error('Erro ao enviar entrada de chat', error.response?.data || error.message)
+    // Função que valida e registra a entrada do usuário no chat via requisição PUT
+    async function validarEntrar() {
+        const idUser = await AsyncStorage.getItem('idUser') // Recupera o ID do usuário armazenado localmente
+        console.log('ID do usuário:', idUser)
+
+        try {
+            // Envia ID do usuário para o endpoint do chat para permitir acesso
+            const response = await api.put('/chat/1/usuario', {
+                idUsuario: Number(idUser)
+            })
+            navigation.navigate('GrupoNassauMed') // Navega para a tela do grupo após sucesso
+        } catch (error) {
+            // Loga erro caso a requisição falhe
+            console.error('Erro ao enviar entrada de chat', error.response?.data || error.message)
+        }
     }
-}
 
     return (
         <SafeAreaView style={styles.container}>
+
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.voltar}>
                     <Ionicons name="arrow-back" size={25} color="#fff" />
@@ -35,6 +41,7 @@ export default function Search() {
 
             <View style={styles.linha} />
 
+            {/* Caixa que mostra logo, nome, descrição e endereço do grupo */}
             <View style={styles.caixaDescricao}>
                 <View style={styles.topoCaixa}>
                     <View style={styles.logoNomeWrapper}>
@@ -58,6 +65,7 @@ export default function Search() {
                 </View>
             </View>
 
+            {/* Botão que aciona a função para entrar no grupo */}
             <TouchableOpacity style={styles.botaoEntrar} onPress={validarEntrar}>
                 <Text style={styles.textoBotao}>ENTRAR</Text>
             </TouchableOpacity>

@@ -1,3 +1,6 @@
+// Tela de descrição do grupo de Direito da UNINASSAU Caruaru
+// Exibe detalhes do grupo e permite navegação para o chat correspondente
+
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -5,10 +8,12 @@ import { useNavigation } from '@react-navigation/native'
 
 export default function Search(){
 
-    const navigation = useNavigation()
+    const navigation = useNavigation() // Hook para navegação entre telas
 
     return(
         <SafeAreaView style={styles.container}>
+
+            {/* Cabeçalho com botão de voltar e título */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.voltar}>
                     <Ionicons name="arrow-back" size={25} color="#fff" />
@@ -18,6 +23,7 @@ export default function Search(){
 
             <View style={styles.linha} />
 
+            {/* Caixa com as informações do grupo */}
             <View style={styles.caixaDescricao}>
                 <View style={styles.topoCaixa}>
                     <View style={styles.logoNomeWrapper}>
@@ -41,6 +47,7 @@ export default function Search(){
                 </View>
             </View>
             
+            {/* Botão para entrar no grupo de Direito */}
             <TouchableOpacity style={styles.botaoEntrar} onPress={() => navigation.navigate('GrupoNassauDir')}>
                 <Text style={styles.textoBotao}>ENTRAR</Text>
             </TouchableOpacity>

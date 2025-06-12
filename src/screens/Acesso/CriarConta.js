@@ -1,40 +1,43 @@
+// Importa navegação, componentes do React Native, ícones e gradient
 import { useNavigation } from '@react-navigation/native'
-import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform, Alert} from 'react-native'
+import { View, Text, TextInput, Image, TouchableOpacity, StyleSheet, Platform, Alert } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
+
+// Importa a instância configurada do Axios
 import api from '../../../src/axios/api'
 
 export default function CriarConta() {
-  
+
   const navigation = useNavigation()
+
+  // Estados dos campos de cadastro
   const [email, setEmailCad] = useState()
   const [usuario, setUsuarioCad] = useState()
   const [senha, setSenhaCad] = useState()
 
-  function confirmarCadastro(){
-    
+  // Função para validar e enviar os dados de cadastro para a API
+  function confirmarCadastro() {
     const confirmarCadastro = async () => {
 
       if (!email || !usuario || !senha) {
-        Alert.alert('Preencha corretamente!','Preencha todos os campos e tente novamente.')
-        return;
+        Alert.alert('Preencha corretamente!', 'Preencha todos os campos e tente novamente.')
+        return
       }
 
       try {
-
         const response = await api.post('/usuario/cadastro', {
           usuario: usuario,
           email: email,
           senha: senha
-
         })
 
         console.log("Cadastro Realizado!")
         navigation.replace('Login')
         Alert.alert("✅ Cadastro realizado!", "Agora, entre em sua conta.")
 
-      }catch(error){
+      } catch (error) {
         if (error.response && error.response.status === 400) {
           Alert.alert('Cadastro não realizado!', 'Tente novamente mais tarde!')
         } else {
@@ -42,19 +45,19 @@ export default function CriarConta() {
         }
       }
 
-    } 
+    }
     confirmarCadastro()
   }
 
   return (
-
     <LinearGradient
-            colors={['#0a002e', '#0f0142']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.container}
+      colors={['#0a002e', '#0f0142']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={styles.container}
     >
 
+      {/* Botão de voltar */}
       <TouchableOpacity
         style={styles.botaoVoltar}
         onPress={() => navigation.goBack()}
@@ -62,6 +65,7 @@ export default function CriarConta() {
         <Ionicons name="arrow-back" size={30} color="#fff" />
       </TouchableOpacity>
 
+      {/* Logo e título */}
       <View>
         <Image
           source={require("../../assets/logo.png")}
@@ -70,26 +74,28 @@ export default function CriarConta() {
         <Text style={styles.titulo}>REGISTRE-SE</Text>
       </View>
 
+      {/* Inputs de cadastro */}
       <TextInput
         style={styles.input}
-        onChangeText={value =>setEmailCad(value)}
+        onChangeText={value => setEmailCad(value)}
         placeholder='Email'
       />
 
       <TextInput
         style={styles.input}
-        onChangeText={value =>setUsuarioCad(value)}
+        onChangeText={value => setUsuarioCad(value)}
         placeholder='Usuário'
       />
 
       <TextInput
         style={styles.input}
-        onChangeText={value =>setSenhaCad(value)}
+        onChangeText={value => setSenhaCad(value)}
         placeholder='Senha'
       />
 
+      {/* Botão de registrar */}
       <TouchableOpacity style={styles.botaoRegistrar} onPress={confirmarCadastro}>
-        <LinearGradient 
+        <LinearGradient
           colors={['#160161', '#2602a8']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 0 }}
@@ -100,13 +106,13 @@ export default function CriarConta() {
       </TouchableOpacity>
 
     </LinearGradient>
-
   )
 }
 
+// Estilos da tela de criação de conta
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
+  container: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -116,13 +122,13 @@ const styles = StyleSheet.create({
     left: 20,
     zIndex: 20,
   },
-  logo:{
+  logo: {
     opacity: 0.35,
     width: 250,
     resizeMode: "contain",
     marginBottom: 20,
   },
-  titulo:{
+  titulo: {
     position: "absolute",
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontSize: 30,
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 3,
   },
-  input:{
+  input: {
     backgroundColor: "#ffffff",
     height: 45,
     width: "80%",
@@ -142,26 +148,25 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     padding: 10,
   },
-  textoRegistrar:{
+  textoRegistrar: {
     fontFamily: Platform.OS === 'ios' ? 'System' : 'Roboto',
     fontSize: 20,
-    fontWeight:'bold',
-    color:"#ffffff",
+    fontWeight: 'bold',
+    color: "#ffffff",
   },
-  botaoRegistrar:{
+  botaoRegistrar: {
     width: "55%",
     height: 45,
     marginTop: 53,
     marginBottom: 150,
     borderRadius: 10,
-    overflow:"hidden",
+    overflow: "hidden",
   },
-  gradientBotaoRegistrar:{
+  gradientBotaoRegistrar: {
     width: '100%',
     height: '100%',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
-
 })

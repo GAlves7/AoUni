@@ -1,3 +1,4 @@
+// Importações principais: hooks do React, componentes do React Native, navegação, API e armazenamento local
 import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
@@ -18,17 +19,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function GroupChat() {
   const navigation = useNavigation()
+
+  // Estados locais para controlar mensagens, mensagem atual e ID do usuário
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
   const [userId, setUserId] = useState(null)
 
+  // useEffect inicial: carrega mensagens do backend e ID do usuário do AsyncStorage
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await api.get('/chat/1/mensagem')
-        console.log('Resposta da API:', response.data)
-
-        // Caso precise acessar uma chave específica, troque abaixo
         const msgs = Array.isArray(response.data) ? response.data : []
         setMessages(msgs)
       } catch (error) {
@@ -44,13 +45,14 @@ export default function GroupChat() {
     loadUserId()
     fetchMessages()
 
+    // Atualiza as mensagens a cada 3 segundos
     const interval = setInterval(fetchMessages, 3000)
     return () => clearInterval(interval)
   }, [])
 
+  // Envia nova mensagem para a API e atualiza a lista local
   const handleSendMessage = async () => {
     const idUser = await AsyncStorage.getItem('idUser')
-
     if (!message.trim()) return
 
     try {
@@ -58,7 +60,6 @@ export default function GroupChat() {
         mensagem: message,
         id: idUser
       })
-
       setMessages(prev => [...prev, response.data])
       setMessage('')
     } catch (error) {
@@ -68,6 +69,7 @@ export default function GroupChat() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Cabeçalho com botão de voltar e informações do grupo */}
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.replace('Rotas', { screen: 'Pesquisar' })}
@@ -85,6 +87,7 @@ export default function GroupChat() {
         <Text style={styles.groupName}>UNINASSAU Caruaru - Medicina</Text>
       </View>
 
+      {/* Lista de mensagens do grupo */}
       <ScrollView style={styles.messagesContainer}>
         {Array.isArray(messages) &&
           messages.map((item, index) => {
@@ -112,6 +115,7 @@ export default function GroupChat() {
           })}
       </ScrollView>
 
+      {/* Campo de envio de nova mensagem */}
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={90}

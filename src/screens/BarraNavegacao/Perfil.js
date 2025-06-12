@@ -22,7 +22,7 @@ export default function Perfil() {
           if (usuarioNome) setNomeUsuario(usuarioNome)
 
           const idUser = await AsyncStorage.getItem('idUser')
-          const nomeArquivo = await AsyncStorage.getItem('nomeArquivoFoto') // Ex: "perfil.png"
+          const nomeArquivo = await AsyncStorage.getItem('nomeArquivoFoto')
           const extensao = nomeArquivo?.split('.').pop()?.toLowerCase()
 
           const mimeType = extensao === 'png'
